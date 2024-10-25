@@ -36,4 +36,14 @@ export class AuthService {
     const { password, ...result } = newUser;
     return result;
   }
+
+  async validateToken(token: string): Promise<boolean>{
+    try {
+      const decoded = this.jwtService.verify(token);
+
+      return !!decoded;
+    } catch (error) {
+      return false;
+    }
+  }
 }
