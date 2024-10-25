@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 
+// src/users/users.service.ts
 @Injectable()
 export class UsersService {
     constructor(
@@ -15,8 +16,12 @@ export class UsersService {
     }
 
     async create(user: Partial<User>): Promise<User> {
-        const newUser = this.usersRepository.create(user);
-        return this.usersRepository.save(newUser);
+        try {
+            const newUser = this.usersRepository.create(user);
+            return await this.usersRepository.save(newUser);
+        } catch (error) {
+            console.error('Error creating user:', error);
+            throw new Error('Error creating user');
+        }
     }
-
 }

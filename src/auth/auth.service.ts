@@ -1,8 +1,8 @@
-// src/auth/auth.service.ts
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class AuthService {
@@ -28,19 +28,27 @@ export class AuthService {
   }
 
   async register(user: any) {
-    const hashedPassword = await bcrypt.hash(user.password, 10);
-    const newUser = await this.usersService.create({
-      ...user,
-      password: hashedPassword,
-    });
-    const { password, ...result } = newUser;
-    return result;
+    try {
+      console.log('Registering user:', user);
+      const hashedPassword = await bcrypt.hash(user.password, 10);
+      console.log('Hashed password:', hashedPassword);
+      const newUser = await this.usersService.create({
+        ...user,
+        password: hashedPassword,
+        role: 'user', // Add a default role
+      });
+      console.log('New user created:', newUser);
+      const { password, ...result } = newUser;
+      return result;
+    } catch (error) {
+      console.error('Error registering user:', error);
+      throw new Error('Error registering user');
+    }
   }
 
   async validateToken(token: string): Promise<boolean>{
     try {
       const decoded = this.jwtService.verify(token);
-
       return !!decoded;
     } catch (error) {
       return false;
