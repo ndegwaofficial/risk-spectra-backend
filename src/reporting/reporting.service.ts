@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Between } from 'typeorm';
 import { CourtCase } from '../court-cases/entities/court-case.entity';
 import { Payment } from '../payments/entities/payment.entity';
-import { User } from '../users/entities/user.entity';
+import { User, UserRole } from '../users/entities/user.entity';
 
 @Injectable()
 export class ReportingService {
@@ -54,7 +54,7 @@ export class ReportingService {
 
   async getLawyerPerformanceReport() {
     const lawyers = await this.userRepository.find({
-      where: { role: 'lawyer' },
+      where: { role: UserRole.LAWYER },
       relations: ['assignedCases'],
     });
 
