@@ -8,6 +8,9 @@ import { CourtCasesModule } from './court-cases/court-cases.module';
 import { JudgmentsModule } from './judgments/judgments.module';
 import { PaymentsModule } from './payments/payments.module';
 import { ReportingModule } from './reporting/reporting.module';
+import { AiService } from './ai-service/ai-service.service';
+import { FraudDetectionController } from './fraud-detection/fraud-detection.controller';
+import { NotificationsModule } from './notifications/notifications.module';
 
 
 @Module({
@@ -28,9 +31,10 @@ import { ReportingModule } from './reporting/reporting.module';
     JudgmentsModule,
     PaymentsModule,
     ReportingModule,
+    NotificationsModule,
 
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, FraudDetectionController],
+  providers: [AppService, AiService],
 })
 export class AppModule {}
