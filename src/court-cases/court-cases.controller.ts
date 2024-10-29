@@ -33,4 +33,12 @@ export class CourtCasesController {
   async remove(@Param('id') id: string): Promise<void> {
     return this.courtCasesService.remove(+id);
   }
+
+  @Post(':id/assign-lawyer')
+  async assignLawyer(
+    @Param('id') id: string,
+     @Body() lawyerId: number
+    ): Promise<CourtCase> {
+    return this.courtCasesService.assignLawyer(+id, lawyerId);
+}
 }
