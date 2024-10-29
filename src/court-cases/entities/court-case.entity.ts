@@ -1,6 +1,7 @@
 // src/court-cases/entities/court-case.entity.ts
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { ClaimedAmount } from 'src/claimed-amounts/entities/claimed-amount.entity';
 
 @Entity()
 export class CourtCase {
@@ -30,4 +31,7 @@ export class CourtCase {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
+
+  @OneToMany(() => ClaimedAmount, claimedAmount => claimedAmount.courtCase)
+  claimedAmounts: ClaimedAmount[];
 }
