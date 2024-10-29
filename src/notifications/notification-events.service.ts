@@ -32,7 +32,7 @@ export class NotificationEventsService {
       user,
       NotificationType.FRAUD_ALERT,
       'Fraud Risk Detected',
-      `High fraud risk detected for case #${case Id} with a risk score of ${riskScore}`,
+      `High fraud risk detected for case #${caseId} with a risk score of ${riskScore}`,
       { caseId, riskScore },
     );
   }
