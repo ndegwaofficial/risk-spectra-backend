@@ -2,16 +2,13 @@
 import { Module } from '@nestjs/common';
 import { ReportingService } from './reporting.service';
 import { ReportingController } from './reporting.controller';
-import { PaymentsModule } from '../payments/payments.module';
-import { UsersModule } from '../users/users.module';
-import { CourtCasesModule } from '../court-cases/court-cases.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { CourtCase } from '../court-cases/entities/court-case.entity';
+import { Payment } from '../payments/entities/payment.entity';
+import { User } from '../users/entities/user.entity';
 
 @Module({
-  imports: [
-    PaymentsModule,
-    UsersModule,
-    CourtCasesModule,
-  ],
+  imports: [TypeOrmModule.forFeature([CourtCase, Payment, User])],
   providers: [ReportingService],
   controllers: [ReportingController],
 })

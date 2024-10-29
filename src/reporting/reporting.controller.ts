@@ -1,5 +1,5 @@
 // src/reporting/reporting.controller.ts
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ReportingService } from './reporting.service';
 
@@ -8,18 +8,23 @@ import { ReportingService } from './reporting.service';
 export class ReportingController {
   constructor(private readonly reportingService: ReportingService) {}
 
-  @Get('payment-summary/:caseId')
-  async getPaymentSummary(@Param('caseId') caseId: string) {
-    return this.reportingService.getPaymentSummary(+caseId);
+  @Get('case-status')
+  async getCaseStatusReport(@Query('startDate') startDate: string, @Query('endDate') endDate: string) {
+    return this.reportingService.getCaseStatusReport(new Date(startDate), new Date(endDate));
   }
 
-  @Get('lawyer-performance/:lawyerId')
-  async getLawyerPerformance(@Param('lawyerId') lawyerId: string) {
-    return this.reportingService.getLawyerPerformance(+lawyerId);
+  @Get('financial-impact')
+  async getFinancialImpactReport(@Query('startDate') startDate: string, @Query('endDate') endDate: string) {
+    return this.reportingService.getFinancialImpactReport(new Date(startDate), new Date(endDate));
   }
 
-  @Get('case-stats')
-  async getAllCaseStats() {
-    return this.reportingService.getAllCaseStats();
+  @Get('lawyer-performance')
+  async getLawyerPerformanceReport() {
+    return this.reportingService.getLawyerPerformanceReport();
+  }
+
+  @Get('case-timeline')
+  async getCaseTimelineReport() {
+    return this.reportingService.getCaseTimelineReport();
   }
 }

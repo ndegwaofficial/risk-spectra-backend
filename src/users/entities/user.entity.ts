@@ -15,6 +15,12 @@ export class User {
     @Column()
     email: string;
 
+    @Column()
+    firstName: string;
+
+    @Column()
+    lastName: string;
+
     @Column({ default: 'user' })
     role: string;
 
