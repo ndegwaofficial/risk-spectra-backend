@@ -1,7 +1,8 @@
 // src/court-cases/entities/court-case.entity.ts
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { ClaimedAmount } from 'src/claimed-amounts/entities/claimed-amount.entity';
+import { Judgment } from 'src/judgments/entities/judgment.entity';
 
 @Entity()
 export class CourtCase {
@@ -34,4 +35,7 @@ export class CourtCase {
 
   @OneToMany(() => ClaimedAmount, claimedAmount => claimedAmount.courtCase)
   claimedAmounts: ClaimedAmount[];
+  
+  @OneToOne(() => Judgment, judgment => judgment.courtCase)
+  judgment: Judgment;
 }
