@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { CourtCasesModule } from './court-cases/court-cases.module';
 import { JudgmentsModule } from './judgments/judgments.module';
 import { PaymentsModule } from './payments/payments.module';
+import { ReportingModule } from './reporting/reporting.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { PaymentsModule } from './payments/payments.module';
     CourtCasesModule,
     JudgmentsModule,
     PaymentsModule,
+    ReportingModule,
 
   ],
   controllers: [AppController],
