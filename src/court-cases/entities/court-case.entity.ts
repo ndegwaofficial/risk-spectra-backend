@@ -3,6 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, OneToOne 
 import { User } from '../../users/entities/user.entity';
 import { ClaimedAmount } from 'src/claimed-amounts/entities/claimed-amount.entity';
 import { Judgment } from 'src/judgments/entities/judgment.entity';
+import { Payment } from 'src/payments/entities/payment.entity';
 
 @Entity()
 export class CourtCase {
@@ -38,4 +39,7 @@ export class CourtCase {
   
   @OneToOne(() => Judgment, judgment => judgment.courtCase)
   judgment: Judgment;
+
+  @OneToMany(() => Payment, payment => payment.courtCase)
+  payments: Payment[];
 }

@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CourtCasesModule } from './court-cases/court-cases.module';
 import { JudgmentsModule } from './judgments/judgments.module';
+import { PaymentsModule } from './payments/payments.module';
 
 
 @Module({
@@ -24,6 +25,7 @@ import { JudgmentsModule } from './judgments/judgments.module';
     UsersModule,
     CourtCasesModule,
     JudgmentsModule,
+    PaymentsModule,
 
   ],
   controllers: [AppController],
