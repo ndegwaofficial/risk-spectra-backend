@@ -11,6 +11,7 @@ import { ReportingModule } from './reporting/reporting.module';
 import { AiService } from './ai-service/ai-service.service';
 import { FraudDetectionController } from './fraud-detection/fraud-detection.controller';
 import { NotificationsModule } from './notifications/notifications.module';
+import { AiServiceModule } from './ai-service/ai-service.module';
 
 
 @Module({
@@ -32,6 +33,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     PaymentsModule,
     ReportingModule,
     NotificationsModule,
+    AiServiceModule,
 
   ],
   controllers: [AppController, FraudDetectionController],

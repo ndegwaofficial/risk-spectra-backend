@@ -6,6 +6,7 @@ import { CourtCase } from './entities/court-case.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateCourtCaseDto } from './dto/create-court-case.dto';
 import { UpdateCourtCaseDto } from './dto/update-court-case.dto';
+import { AiService } from '../ai-service/ai-service.service';
 
 @Injectable()
 export class CourtCasesService {
@@ -14,19 +15,18 @@ export class CourtCasesService {
     private courtCasesRepository: Repository<CourtCase>,
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private readonly aiService: AiService,
   ) {}
 
   async create(createCourtCaseDto: CreateCourtCaseDto): Promise<CourtCase> {
     const courtCase = this.courtCasesRepository.create(createCourtCaseDto);
     
-    if (createCourtCaseDto.assignedLawyerId) {
-      const lawyer = await this.usersRepository.findOne({
-        where: { id: createCourtCaseDto.assignedLawyerId }
-      });
-      if (!lawyer) {
-        throw new NotFoundException('Lawyer not found');
-      }
-      courtCase.assignedLawyer = lawyer;
+    // Perform fraud detection
+    const fraudDetectionResult = await this.aiService.detectFraud(createCourtCaseDto);
+    
+    if (fraudDetectionResult.riskScore > 0.7) {
+      courtCase.flaggedForReview = true;
+      courtCase.riskScore = fraudDetectionResult.riskScore;
     }
     
     return this.courtCasesRepository.save(courtCase);
@@ -85,6 +85,28 @@ export class CourtCasesService {
     }
     
     courtCase.assignedLawyer = lawyer;
+    return this.courtCasesRepository.save(courtCase);
+  }
+
+
+  async getFlaggedCases(): Promise<CourtCase[]> {
+    return this.courtCasesRepository.find({
+      where: { flaggedForReview: true },
+      relations: ['assignedLawyer'],
+    });
+  }
+
+  async reviewCase(id: number, approved: boolean): Promise<CourtCase> {
+    const courtCase = await this.findOne(id);
+    
+    if (!courtCase.flaggedForReview) {
+      throw new NotFoundException('This case is not flagged for review');
+    }
+    
+    courtCase.flaggedForReview = false;
+    courtCase.reviewedAt = new Date();
+    courtCase.approved = approved;
+    
     return this.courtCasesRepository.save(courtCase);
   }
 }

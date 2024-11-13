@@ -3,7 +3,7 @@ import axios from 'axios';
 
 @Injectable()
 export class AiService {
-  private readonly aiServiceUrl = 'http://localhost:5000';  
+  private readonly aiServiceUrl = 'http://localhost:5000';  // Replace with your AI service URL
 
   async detectFraud(caseData: any): Promise<any> {
     try {

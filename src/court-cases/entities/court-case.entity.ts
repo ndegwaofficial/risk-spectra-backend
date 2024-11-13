@@ -34,6 +34,18 @@ export class CourtCase {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
+  @Column({ default: false })
+  flaggedForReview: boolean;
+
+  @Column({ type: 'float', nullable: true })
+  riskScore: number;
+
+  @Column({ nullable: true })
+  reviewedAt?: Date;
+
+  @Column({ nullable: true })
+  approved?: boolean;
+
   @OneToMany(() => ClaimedAmount, claimedAmount => claimedAmount.courtCase)
   claimedAmounts: ClaimedAmount[];
   

@@ -5,6 +5,7 @@ export enum UserRole {
     ADMIN = 'admin',
     LAWYER = 'lawyer',
     CLIENT = 'client',
+    USER = 'user',
 
 }
 @Entity()
@@ -21,10 +22,10 @@ export class User {
     @Column()
     email: string;
 
-    @Column()
+    @Column({nullable: true})
     firstName: string;
 
-    @Column()
+    @Column({nullable: true})
     lastName: string;
 
     @Column({

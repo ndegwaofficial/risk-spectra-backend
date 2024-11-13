@@ -66,4 +66,16 @@ export class CourtCasesController {
     ): Promise<CourtCase> {
     return this.courtCasesService.assignLawyer(+id, lawyerId);
 }
+
+@Get('flagged')
+@Roles(UserRole.ADMIN)
+async getFlaggedCases() {
+  return this.courtCasesService.getFlaggedCases();
+}
+
+@Post(':id/review')
+@Roles(UserRole.ADMIN)
+async reviewCase(@Param('id') id: string, @Body('approved') approved: boolean) {
+  return this.courtCasesService.reviewCase(+id, approved);
+}
 }
